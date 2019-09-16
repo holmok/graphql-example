@@ -1,0 +1,182 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Subject Service
+  description: A service for subjects
+  license:
+    name: MIT
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      tags:
+        - health
+      responses:
+        '200':
+          description: Health check
+          schema:
+            $ref: '#/definitions/HealthCheck'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /subjects:
+    get:
+      summary: List subjects
+      operationId: listSubjects
+      tags:
+        - subjects
+      parameters:
+        - name: topic
+          in: query
+          description: topic for subjects to get
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A paged array of subjects
+          schema:
+            $ref: '#/definitions/Subjects'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a subject
+      operationId: createSubject
+      tags:
+        - subjects
+      parameters:
+        - in: body
+          name: subject
+          schema:
+            $ref: '#/definitions/NewSubject'
+      responses:
+        '201':
+          description: OK
+          schema:
+            type: string
+            example: New ID
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/subjects/{id}':
+    get:
+      summary: Get subject by id
+      operationId: getSubjectById
+      tags:
+        - subjects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the subject to retrieve
+          type: string
+      responses:
+        '200':
+          description: Subject for id
+          schema:
+            $ref: '#/definitions/Subject'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a subject
+      operationId: updateSubject
+      tags:
+        - subjects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the subject to update
+          type: string
+        - in: body
+          name: subject
+          schema:
+            $ref: '#/definitions/NewSubject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a subject
+      operationId: deleteSubject
+      tags:
+        - subjects
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the subject to delete
+          type: string
+      responses:
+        '204':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Subject:
+    required:
+      - name
+      - topic
+      - id
+      - created
+    properties:
+      id:
+        type: string
+      topic:
+        type: string
+      name:
+        type: string
+      created:
+        type: string
+  NewSubject:
+    required:
+      - name
+      - topic 
+    properties:
+      name:
+        type: string
+      topic:
+        type: string
+  HealthCheck:
+    required:
+      - status
+    properties:
+      status:
+        type: string
+  Subjects:
+    type: array
+    items:
+      $ref: '#/definitions/Subject'
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+      message:
+        type: string

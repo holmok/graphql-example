@@ -1,0 +1,192 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Topic Service
+  description: A service for topics
+  license:
+    name: MIT
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      tags:
+        - health
+      responses:
+        '200':
+          description: Health check
+          schema:
+            $ref: '#/definitions/HealthCheck'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /topics:
+    get:
+      summary: List topics
+      operationId: listTopics
+      tags:
+        - topics
+      parameters:
+        - name: offset
+          in: query
+          description: offset of list
+          required: false
+          type: integer
+          default: 0
+        - name: take
+          in: query
+          description: items in list
+          required: false
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: A paged array of topics
+          schema:
+            $ref: '#/definitions/Topics'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a topic
+      operationId: createTopic
+      tags:
+        - topics
+      parameters:
+        - in: body
+          name: topic
+          schema:
+            $ref: '#/definitions/NewTopic'
+      responses:
+        '201':
+          description: OK
+          schema:
+            type: string
+            example: New ID
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/topics/{id}':
+    get:
+      summary: Get topic by id
+      operationId: getTopicById
+      tags:
+        - topics
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the topic to retrieve
+          type: string
+      responses:
+        '200':
+          description: Topic for id
+          schema:
+            $ref: '#/definitions/Topic'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a topic
+      operationId: updateTopic
+      tags:
+        - topics
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the topic to update
+          type: string
+        - in: body
+          name: topic
+          schema:
+            $ref: '#/definitions/NewTopic'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a topic
+      operationId: deleteTopic
+      tags:
+        - topics
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the topic to delete
+          type: string
+      responses:
+        '204':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Topic:
+    required:
+      - name
+      - id
+      - created
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      created:
+        type: string
+  NewTopic:
+    required:
+      - name
+    properties:
+      name:
+        type: string
+  HealthCheck:
+    required:
+      - status
+    properties:
+      status:
+        type: string
+  Topics:
+    required:
+      - more
+      - count
+      - items
+    properties:
+      more:
+        type: boolean
+      count:
+        type: integer
+      items:
+        type: array
+        $ref: '#/definitions/Topic'
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
