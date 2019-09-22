@@ -1,0 +1,37 @@
+{
+  "name": "topic-component",
+  "version": "1.0.0",
+  "description": "graphql component for topics",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holmok/graphql-example.git"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "chris holmok <christopher@holmok.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/holmok/graphql-example/issues"
+  },
+  "homepage": "https://github.com/holmok/graphql-example#readme",
+  "devDependencies": {
+    "nyc": "^14.1.1",
+    "sinon": "^7.4.2",
+    "standard": "^14.3.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0"
+  },
+  "dependencies": {
+    "@hapi/wreck": "^15.1.0",
+    "debug": "^4.1.1",
+    "graphql": "^0.13.2",
+    "graphql-component": "^1.0.4",
+    "graphql-tag-pluck": "^0.8.5",
+    "subject-component": "file:../subject-component"
+  }
+}

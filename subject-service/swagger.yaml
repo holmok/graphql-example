@@ -63,8 +63,7 @@ paths:
         '201':
           description: OK
           schema:
-            type: string
-            example: New ID
+            $ref: '#/definitions/Subject'
         default:
           description: unexpected error
           schema:
@@ -109,8 +108,7 @@ paths:
         '200':
           description: OK
           schema:
-            type: string
-            example: OK
+            $ref: '#/definitions/Subject'
         default:
           description: unexpected error
           schema:
@@ -127,11 +125,10 @@ paths:
           description: The id of the subject to delete
           type: string
       responses:
-        '204':
+        '200':
           description: OK
           schema:
-            type: string
-            example: OK
+            $ref: '#/definitions/Subject'
         default:
           description: unexpected error
           schema:

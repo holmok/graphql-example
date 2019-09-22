@@ -34,15 +34,16 @@ module.exports = class service {
 
   add (item) {
     const id = Uuid.v4()
-    this.data.push({
+    const data = {
       ...{
         id,
         created: new Date().toISOString()
       },
       ...item
-    })
+    }
+    this.data.push(data)
     internals.save.call(this)
-    return id
+    return data
   }
 
   update (id, item) {
@@ -52,8 +53,10 @@ module.exports = class service {
       throw new Error('Item does not exist')
     }
     const index = this.data.findIndex(i => i.id === id)
-    this.data[index] = { ...prev, ...item }
+    const data = { ...prev, ...item }
+    this.data[index] = data
     internals.save.call(this)
+    return data
   }
 
   get (id) {
@@ -62,7 +65,14 @@ module.exports = class service {
 
   delete (id) {
     const index = this.data.findIndex(i => i.id === id)
-    this.data.splice(index, 1)
-    internals.save.call(this)
+    debug('DELETE AT %s', index)
+    if (index >= 0) {
+      const data = this.data.splice(index, 1)
+      internals.save.call(this)
+      debug(data[0])
+      return data[0]
+    } else {
+      throw new Error(`No item at for id=${id}`)
+    }
   }
 }

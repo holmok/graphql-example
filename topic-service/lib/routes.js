@@ -21,30 +21,28 @@ router.get('/health', async ctx => {
 })
 
 router.post('/topics', async ctx => {
-  ctx.status = 201
   ctx.body = service.add(ctx.request.body)
+  ctx.status = 201
 })
 
 router.get('/topics', async ctx => {
-  ctx.status = 200
   ctx.body = service.list(ctx.query)
+  ctx.status = 200
 })
 
 router.get('/topics/:id', async ctx => {
-  ctx.status = 200
   ctx.body = service.get(ctx.params.id)
+  ctx.status = 200
 })
 
 router.put('/topics/:id', async ctx => {
-  service.update(ctx.params.id, ctx.request.body)
+  ctx.body = service.update(ctx.params.id, ctx.request.body)
   ctx.status = 200
-  ctx.body = 'OK'
 })
 
 router.del('/topics/:id', async ctx => {
-  service.delete(ctx.params.id)
-  ctx.status = 204
-  ctx.body = 'OK'
+  ctx.body = service.delete(ctx.params.id)
+  ctx.status = 200
 })
 
 module.exports = router

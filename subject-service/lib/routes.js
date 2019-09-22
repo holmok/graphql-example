@@ -36,15 +36,13 @@ router.get('/subjects/:id', async ctx => {
 })
 
 router.put('/subjects/:id', async ctx => {
-  service.update(ctx.params.id, ctx.request.body)
+  ctx.body = service.update(ctx.params.id, ctx.request.body)
   ctx.status = 200
-  ctx.body = 'OK'
 })
 
 router.del('/subjects/:id', async ctx => {
-  service.delete(ctx.params.id)
+  ctx.body = service.delete(ctx.params.id)
   ctx.status = 204
-  ctx.body = 'OK'
 })
 
 module.exports = router
