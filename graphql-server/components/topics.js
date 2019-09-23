@@ -1,7 +1,7 @@
 const GraphQLComponent = require('graphql-component')
 const Wreck = require('@hapi/wreck')
 const debug = require('debug')('topic-component')
-const { SubjectComponent } = require('subject-component')
+const { SubjectComponent } = require('./subjects')
 
 class TopicComponent extends GraphQLComponent {
   constructor ({ baseUrl }) {
@@ -44,63 +44,68 @@ class TopicComponent extends GraphQLComponent {
     const resolvers = {
       Query: {
         async topic (_, { id }, { call }) {
-          const uri = `/topics/${id}`
+          const uri = `topics/${id}`
           debug('[topic] calling: %s', uri)
           const { res, payload } = await wreck.get(uri)
-          debug('[topic] got (%s): %o', res.statusCode, payload)
-          return payload
+          const result = JSON.parse(payload.toString('utf-8'))
+          debug('[topic] got (%s): %o', res.statusCode, result)
+          return result
         },
         async topics (_, { offset = 0, take = 10 }, { call }) {
-          const uri = `/topics/?take=${take}&offset=${offset}`
+          const uri = `topics?take=${take}&offset=${offset}`
           debug('[topics] calling: %s', uri)
           const { res, payload } = await wreck.get(uri)
-          debug('[topics] got (%s): %o', res.statusCode, payload)
-          return payload
+          const result = JSON.parse(payload.toString('utf-8'))
+          debug('[topics] got (%s): %o', res.statusCode, result)
+          return result
         }
       },
       Mutation: {
         async createTopic (_, { name }, { call }) {
-          const uri = '/topics'
+          const uri = 'topics'
           debug('[createTopic] calling: %s', uri)
           const { res, payload } = await wreck.post(uri, {
             payload: { name }
           })
-          debug('[createTopic] got (%s): %o', res.statusCode, payload)
-          return payload
+          const result = JSON.parse(payload.toString('utf-8'))
+          debug('[createTopic] got (%s): %o', res.statusCode, result)
+          return result
         },
         async updateTopic (_, { id, name }, { call }) {
-          const uri = `/topics/${id}`
+          const uri = `topics/${id}`
           debug('[updateTopic] calling: %s', uri)
           const { res, payload } = await wreck.put(uri, {
             payload: { name }
           })
-          debug('[updateTopic] got (%s): %o', res.statusCode, payload)
-          return payload
+          const result = JSON.parse(payload.toString('utf-8'))
+          debug('[updateTopic] got (%s): %o', res.statusCode, result)
+          return result
         },
         async deleteTopic (_, { id }, { call }) {
-          const uri = `/topics/${id}`
+          const uri = `topics/${id}`
           debug('[updateTopic] calling: %s', uri)
           const { res, payload } = await wreck.delete(uri)
-          debug('[updateTopic] got (%s): %o', res.statusCode, payload)
-          return payload
+          const result = JSON.parse(payload.toString('utf-8'))
+          debug('[updateTopic] got (%s): %o', res.statusCode, result)
+          return result
         }
       },
       Topic: {
         async subjects (topic, args, context, info) {
           const { data, errors } = await subjects.execute(
-            `query { subjects(topic: "${topic.id}") { ...AllSubjects }}`,
+            `query { subjects(topic: "${topic.id}") { id,name }}`,
             context)
 
           if (errors) {
             throw errors[0]
           }
 
-          return data.topics
+          return data.subjects
         }
       }
     }
 
-    super({ types, resolvers })
+    super({ types, resolvers, imports: [subjects] })
   }
 }
 

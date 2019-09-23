@@ -4,7 +4,7 @@
   "description": "graphql server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js  | pino-colada",
+    "start": "node  index.js  | pino-colada",
     "test": "tape tests/**/*.test.js"
   },
   "repository": {
@@ -22,14 +22,19 @@
   },
   "homepage": "https://github.com/holmok/graphql-example#readme",
   "dependencies": {
-    "apollo-server": "^2.0.7",
+    "@hapi/wreck": "^15.1.0",
+    "apollo-server": "^2.0.8",
     "apollo-server-koa": "^2.0.7",
+    "corejs": "^1.0.0",
     "graphql": "^0.13.2",
+    "graphql-component": "^1.0.4",
+    "graphql-tag-pluck": "^0.8.5",
     "koa": "^2.8.1",
     "koa-pino-logger": "^2.1.3",
-    "pino-colada": "^1.4.5",
-    "subject-component": "file:../subject-component",
-    "topic-component": "file:../topic-component"
+    "pino-colada": "^1.4.5"
+  },
+  "resolutions": {
+    "graphql": "^0.13.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.2",
