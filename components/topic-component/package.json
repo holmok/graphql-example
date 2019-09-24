@@ -13,6 +13,7 @@
     "@hapi/wreck": "^15.1.0",
     "debug": "^4.1.1",
     "graphql": "0.13.2",
-    "graphql-component": "^1.0.4"
+    "graphql-component": "^1.0.4",
+    "subject-component": "1.0.0"
   }
 }
