@@ -12,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "apollo-boost": "^0.4.1",
     "cross-fetch": "^3.0.4",
+    "dayjs": "^1.8.16",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.1",
     "next": "^9.0.6",

@@ -3,6 +3,11 @@ import Link from 'next/link'
 import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import dayjs from 'dayjs'
+
+import "./normalize.css"
+import "./skeleton.css"
+import "./style.css"
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql'
@@ -32,12 +37,12 @@ function Home() {
         if (loading || !data) return (<p>Loading</p>)
         console.log(data)
         return data.topics.items.map(topic => (
-          <div>
+          <div className="container content">
             <p key={topic.id}>
-              TOPIC: <strong>{topic.name}</strong> - <em>{topic.created}</em>
+              TOPIC: <strong>{topic.name}</strong> - <em>{dayjs(topic.created).format('YYYY MM-DD HH:mm:ss')}</em>
             </p>
             <ul>
-              {topic.subjects.map(subject => (<li key={subject.id}>Subject = {subject.name}</li>))}
+        {topic.subjects.map(subject => (<li key={subject.id}>Subject = {subject.name} <em>({dayjs(subject.created).format('YYYY MM-DD HH:mm:ss')})</em></li>))}
             </ul>
           </div>
         ))
