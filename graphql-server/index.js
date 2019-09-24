@@ -2,8 +2,8 @@ const Koa = require('koa')
 const { ApolloServer } = require('apollo-server-koa')
 const Logger = require('koa-pino-logger')
 
-const { TopicComponent } = require('./components/topics')
-const { SubjectComponent } = require('./components/subjects')
+const { TopicComponent } = require('topic-component')
+const { SubjectComponent } = require('subject-component')
 const GraphQLComponent = require('graphql-component')
 
 const topics = new TopicComponent({

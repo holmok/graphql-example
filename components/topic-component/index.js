@@ -1,7 +1,7 @@
 const GraphQLComponent = require('graphql-component')
 const Wreck = require('@hapi/wreck')
 const debug = require('debug')('topic-component')
-const { SubjectComponent } = require('./subjects')
+const { SubjectComponent } = require('subject-component')
 
 class TopicComponent extends GraphQLComponent {
   constructor ({ baseUrl }) {
