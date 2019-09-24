@@ -1,0 +1,25 @@
+{
+  "name": "web-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -- -p 8000",
+    "build": "next build",
+    "start": "next start -- -p 8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-boost": "^0.4.1",
+    "cross-fetch": "^3.0.4",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.10.1",
+    "next": "^9.0.6",
+    "react": "^16.9.0",
+    "react-apollo": "^2.5.5",
+    "react-dom": "^16.9.0",
+    "typescript": "^3.6.3"
+  }
+}
