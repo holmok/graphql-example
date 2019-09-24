@@ -1,12 +1,17 @@
-const { TopicComponent } = require('topic-component')
+const { SubjectComponent } = require('./components/subjects')
 
-const topics = new TopicComponent({ baseUrl: 'http://localhost:3000/api/' })
+const topics = new SubjectComponent({ baseUrl: 'http://localhost:3001/api/' })
 
 async function run () {
   const h = await topics.execute(
-    'query { topics(offset:0,take:10) { more,total,items }}')
+    `query{subjects(topic:"0dZGpmlo0aeL68SUmFr61j"){
+      id
+      name
+      topic 
+      created
+    }}`)
 
-  console.log(JSON.stringify(h))
+  console.log(JSON.stringify(h.data.subjects))
 }
 
 run()

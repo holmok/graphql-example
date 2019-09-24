@@ -8,7 +8,7 @@ class TopicComponent extends GraphQLComponent {
     const wreck = Wreck.defaults({
       baseUrl
     })
-    const subjects = new SubjectComponent({ baseUrl: 'http://localhost:3001/api' })
+    const subjects = new SubjectComponent({ baseUrl: 'http://localhost:3001/api/' })
     const types = `
       # A topic.
       type Topic {
@@ -92,15 +92,20 @@ class TopicComponent extends GraphQLComponent {
       },
       Topic: {
         async subjects (topic, args, context, info) {
-          const { data, errors } = await subjects.execute(
-            `query { subjects(topic: "${topic.id}") { id,name }}`,
-            context)
+          try {
+            debug('ARGS => %O', { topic, args, context, info })
+            const { data, errors } = await subjects.execute(
+              `query { subjects(topic: "${topic.id}") { id,name, created }}`)
 
-          if (errors) {
-            throw errors[0]
+            if (errors) {
+              throw errors[0]
+            }
+            debug('RESULT: %O', { data, errors })
+            return data.subjects
+          } catch (err) {
+            debug('ERROR %O', err)
+            return []
           }
-
-          return data.subjects
         }
       }
     }

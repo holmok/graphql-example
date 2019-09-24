@@ -4,7 +4,7 @@
   "description": "graphql server",
   "main": "index.js",
   "scripts": {
-    "start": "node  index.js  | pino-colada",
+    "start": "concurrently \"cd ../subject-service && npm start\" \"cd ../topic-service && npm start\" \"DEBUG=* nodemon  index.js  | pino-colada\"",
     "test": "tape tests/**/*.test.js"
   },
   "repository": {
@@ -25,6 +25,7 @@
     "@hapi/wreck": "^15.1.0",
     "apollo-server": "^2.0.8",
     "apollo-server-koa": "^2.0.7",
+    "concurrently": "^4.1.2",
     "corejs": "^1.0.0",
     "graphql": "^0.13.2",
     "graphql-component": "^1.0.4",
