@@ -4,7 +4,7 @@
   "scripts": {
     "lerna": "lerna",
     "bootstrap": "lerna bootstrap",
-    "start": "concurrently \"cd services/subject-service && npm start\" \"cd services/topic-service && npm start\" \"cd graphql-server && npm start \""
+    "start": "concurrently \"cd services/subject-service && npm start\" \"cd services/topic-service && npm start\" \"cd graphql-server && npm start \"  \"cd web-ui && npm run dev \" "
   },
   "devDependencies": {
     "lerna": "^3.16.4"

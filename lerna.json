@@ -1,6 +1,7 @@
 {
   "packages": [
     "graphql-server",
+    "web-ui",
     "services/*",
     "components/*"
   ],
