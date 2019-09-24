@@ -23,6 +23,7 @@ module.exports = class service {
   }
 
   list (topic) {
+    debug('TOPIC => %s, result=%o', topic, this.data.filter(i => i.topic === topic))
     return this.data.filter(i => i.topic === topic)
   }
 

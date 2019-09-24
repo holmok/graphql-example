@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const BodyParser = require('koa-bodyparser')
 const Logger = require('koa-pino-logger')
-
+const debug = require('debug')('topic-service:router')
 const ErrorHandler = require('./error-handler')
 const Service = require('./service')
 
@@ -27,6 +27,7 @@ router.post('/subjects', async ctx => {
 
 router.get('/subjects', async ctx => {
   ctx.status = 200
+  debug(service.list(ctx.query.topic))
   ctx.body = service.list(ctx.query.topic)
 })
 
@@ -42,7 +43,7 @@ router.put('/subjects/:id', async ctx => {
 
 router.del('/subjects/:id', async ctx => {
   ctx.body = service.delete(ctx.params.id)
-  ctx.status = 204
+  ctx.status = 200
 })
 
 module.exports = router

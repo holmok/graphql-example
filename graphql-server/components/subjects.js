@@ -8,7 +8,7 @@ class SubjectComponent extends GraphQLComponent {
       baseUrl
     })
     const types = `
-      # A topic.
+      # A subject.
       type Subject {
         id: ID!
         # The name.
@@ -25,11 +25,11 @@ class SubjectComponent extends GraphQLComponent {
         subjects(topic: String) : [Subject]
       }
       type Mutation {
-        # Create a new topic.
+        # Create a new subject.
         createSubject(name: String!, topic: String!) : Subject,
-        # Create a new topic.
-        updateSubject(id: ID!,name: String!) : Subject,
-        # Create a new topic.
+        # Update a new subject.
+        updateSubject(id: ID!,name: String,topic: String) : Subject,
+        # Delete a new subject.
         deleteSubject(id: ID!) : Subject
       }
     `
@@ -54,21 +54,21 @@ class SubjectComponent extends GraphQLComponent {
         }
       },
       Mutation: {
-        async createSubject (_, { name }, { call }) {
+        async createSubject (_, { name, topic }, { call }) {
           const uri = 'subjects'
           debug('[createSubject] calling: %s', uri)
           const { res, payload } = await wreck.post(uri, {
-            payload: { name }
+            payload: { name, topic }
           })
           const result = JSON.parse(payload.toString('utf-8'))
           debug('[createSubject] got (%s): %o', res.statusCode, result)
           return result
         },
-        async updateSubject (_, { id, name }, { call }) {
+        async updateSubject (_, { id, name, topic }, { call }) {
           const uri = `subjects/${id}`
           debug('[updateSubject] calling: %s', uri)
           const { res, payload } = await wreck.put(uri, {
-            payload: { name }
+            payload: { name, topic }
           })
           const result = JSON.parse(payload.toString('utf-8'))
           debug('[updateSubject] got (%s): %o', res.statusCode, result)
